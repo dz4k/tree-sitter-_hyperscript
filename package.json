@@ -1,0 +1,17 @@
+{
+  "name": "tree-sitter-hyperscript",
+  "version": "0.0.0",
+  "description": "A tree-sitter parser for _hyperscript",
+  "main": "bindings/node",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Deniz Akşimşek",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.15.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.0"
+  }
+}
