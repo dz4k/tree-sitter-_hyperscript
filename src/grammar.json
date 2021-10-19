@@ -35,6 +35,10 @@
         {
           "type": "SYMBOL",
           "name": "onFeature"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "behaviorFeature"
         }
       ]
     },
@@ -252,6 +256,51 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "behaviorFeature": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "behavior"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_dotOrColonPath"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "params",
+          "content": {
+            "type": "SYMBOL",
+            "name": "parameterList"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_feature"
+              },
+              {
+                "type": "STRING",
+                "value": "end"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "end"
         }
       ]
     },

@@ -19,6 +19,40 @@
     }
   },
   {
+    "type": "behaviorFeature",
+    "named": true,
+    "fields": {
+      "params": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "parameterList",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "behaviorFeature",
+          "named": true
+        },
+        {
+          "type": "defFeature",
+          "named": true
+        },
+        {
+          "type": "onFeature",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "defFeature",
     "named": true,
     "fields": {
@@ -305,6 +339,10 @@
       "required": false,
       "types": [
         {
+          "type": "behaviorFeature",
+          "named": true
+        },
+        {
           "type": "defFeature",
           "named": true
         },
@@ -414,6 +452,10 @@
   },
   {
     "type": "at",
+    "named": false
+  },
+  {
+    "type": "behavior",
     "named": false
   },
   {

@@ -25,6 +25,7 @@ module.exports = grammar({
     _feature: $ => choice(
       $.defFeature,
       $.onFeature,
+      $.behaviorFeature,
     ),
 
     _command: $ => choice(
@@ -60,6 +61,17 @@ module.exports = grammar({
         field('queue', choice('all', 'first', 'none', 'last')),
       )),
       commandList($),
+    ),
+
+    behaviorFeature: $ => seq(
+      'behavior',
+      field('name', $._dotOrColonPath),
+      field('params', $.parameterList),
+      repeat(seq(
+        $._feature,
+        'end',
+      )),
+      'end',
     ),
 
 
