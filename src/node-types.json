@@ -2,28 +2,42 @@
   {
     "type": "argumentList",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "defFeature",
     "named": true,
     "fields": {
-      "args": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "argumentList",
-            "named": true
-          }
-        ]
-      },
       "name": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "IDENTIFIER",
+            "named": true
+          }
+        ]
+      },
+      "params": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "argumentList",
             "named": true
           }
         ]
@@ -38,6 +52,147 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "eventName",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "STRING",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "eventSpec",
+    "named": true,
+    "fields": {
+      "countUnbounded": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "and",
+            "named": false
+          },
+          {
+            "type": "on",
+            "named": false
+          }
+        ]
+      },
+      "debounce": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "timeExpression",
+            "named": true
+          }
+        ]
+      },
+      "endCount": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "eventName": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "eventName",
+            "named": true
+          }
+        ]
+      },
+      "filter": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "symbol",
+            "named": true
+          }
+        ]
+      },
+      "from": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "elsewhere",
+            "named": false
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "symbol",
+            "named": true
+          }
+        ]
+      },
+      "in": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "symbol",
+            "named": true
+          }
+        ]
+      },
+      "params": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "parameterList",
+            "named": true
+          }
+        ]
+      },
+      "startCount": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "throttle": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "timeExpression",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -75,6 +230,73 @@
     }
   },
   {
+    "type": "onFeature",
+    "named": true,
+    "fields": {
+      "every": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "every",
+            "named": false
+          }
+        ]
+      },
+      "queue": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "all",
+            "named": false
+          },
+          {
+            "type": "first",
+            "named": false
+          },
+          {
+            "type": "last",
+            "named": false
+          },
+          {
+            "type": "none",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "eventSpec",
+          "named": true
+        },
+        {
+          "type": "logCommand",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameterList",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "IDENTIFIER",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -84,6 +306,10 @@
       "types": [
         {
           "type": "defFeature",
+          "named": true
+        },
+        {
+          "type": "onFeature",
           "named": true
         }
       ]
@@ -128,11 +354,34 @@
     }
   },
   {
+    "type": "timeExpression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "(",
     "named": false
   },
   {
     "type": ")",
+    "named": false
+  },
+  {
+    "type": ",",
     "named": false
   },
   {
@@ -144,6 +393,34 @@
     "named": true
   },
   {
+    "type": "STRING",
+    "named": true
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
+    "type": "all",
+    "named": false
+  },
+  {
+    "type": "and",
+    "named": false
+  },
+  {
+    "type": "at",
+    "named": false
+  },
+  {
+    "type": "debounced",
+    "named": false
+  },
+  {
     "type": "def",
     "named": false
   },
@@ -152,11 +429,35 @@
     "named": false
   },
   {
+    "type": "elsewhere",
+    "named": false
+  },
+  {
     "type": "end",
     "named": false
   },
   {
+    "type": "every",
+    "named": false
+  },
+  {
+    "type": "first",
+    "named": false
+  },
+  {
+    "type": "from",
+    "named": false
+  },
+  {
     "type": "global",
+    "named": false
+  },
+  {
+    "type": "in",
+    "named": false
+  },
+  {
+    "type": "last",
     "named": false
   },
   {
@@ -168,11 +469,51 @@
     "named": false
   },
   {
+    "type": "milliseconds",
+    "named": false
+  },
+  {
     "type": "module",
     "named": false
   },
   {
+    "type": "ms",
+    "named": false
+  },
+  {
+    "type": "none",
+    "named": false
+  },
+  {
+    "type": "on",
+    "named": false
+  },
+  {
+    "type": "or",
+    "named": false
+  },
+  {
+    "type": "queue",
+    "named": false
+  },
+  {
+    "type": "s",
+    "named": false
+  },
+  {
+    "type": "seconds",
+    "named": false
+  },
+  {
     "type": "then",
+    "named": false
+  },
+  {
+    "type": "throttled",
+    "named": false
+  },
+  {
+    "type": "to",
     "named": false
   }
 ]

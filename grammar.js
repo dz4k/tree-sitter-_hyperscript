@@ -4,6 +4,17 @@ const commandList = $ => repeat(seq(
   optional('then'),
 ))
 
+const sep1 = (rule, separator) => seq(
+  rule,
+  repeat(seq(separator, rule))
+)
+
+const sep = (rule, separator) => optional(sep1(rule, separator))
+
+const re = strings => new RegExp(
+  strings.raw[0].split('\n').map(str => str.trim()).join(''),
+)
+
 module.exports = grammar({
   name: 'YOUR_LANGUAGE_NAME',
 
@@ -13,6 +24,7 @@ module.exports = grammar({
 
     _feature: $ => choice(
       $.defFeature,
+      $.onFeature,
     ),
 
     _command: $ => choice(
@@ -32,13 +44,22 @@ module.exports = grammar({
     defFeature: $ => seq(
       "def",
       field('name', $.IDENTIFIER),
-      field('args', optional($.argumentList)),
+      field('params', optional($.argumentList)),
       commandList($),
     ),
 
     onFeature: $ => seq(
       'on',
-      // TODO: on feature (look at parsing code)
+      field('every', optional('every')),
+      sep(
+        seq($.eventSpec),
+        'or'
+      ),
+      optional(seq(
+        'queue',
+        field('queue', choice('all', 'first', 'none', 'last')),
+      )),
+      commandList($),
     ),
 
 
@@ -69,8 +90,79 @@ module.exports = grammar({
 
     argumentList: $ => seq(
       '(',
-      /* TODO: Parse parameter list */
-      ')'
+      sep($._expression, ','),
+      ')',
+    ),
+
+    parameterList: $ => seq(
+      '(',
+      sep($.IDENTIFIER, ','),
+      ')',
+    ),
+
+
+    eventSpec: $ => seq(
+      field('eventName', $.eventName),
+      optional(field('params', $.parameterList)),
+      optional(seq(
+        '[',
+        field('filter', $._expression),
+        ']',
+      )),
+      optional(seq(
+        field('startCount', $.number),
+        optional(choice(
+          seq(
+            'to',
+            field('endCount', $.number),
+          ),
+          field('countUnbounded', seq('and', 'on')),
+        )),
+      )),
+      // TODO: handle intersection and mutation pseudoevents' special syntax
+      optional(choice(
+        seq(field('from', 'elsewhere')),
+        seq('from', field('from', 'elsewhere')),
+        seq(
+          'from',
+          field('from', $._expression),
+        ),
+      )),
+      optional(seq(
+        'in',
+        field('in', $._expression), // TODO restrict this to css selector refs
+      )),
+      optional(choice(
+        seq(
+          'debounced',
+          'at',
+          field('debounce', $.timeExpression),
+        ),
+        seq(
+          'throttled',
+          'at',
+          field('throttle', $.timeExpression),
+        ),
+      )),
+    ),
+
+    eventName: $ => choice(
+      $.STRING,
+      $._dotOrColonPath,
+    ),
+
+    _dotOrColonPath: $ => re`
+      [a-zA-Z\$_][a-zA-Z0-9\$_]*
+      (
+        (:[a-zA-Z\$_][a-zA-Z0-9\$_]*)*
+        |
+        (\.[a-zA-Z\$_][a-zA-Z0-9\$_]*)*
+      )
+    `,
+
+    timeExpression: $ => seq(
+      $._expression,
+      choice('s', 'ms', 'seconds', 'milliseconds'),
     ),
 
 
@@ -78,6 +170,7 @@ module.exports = grammar({
 
     IDENTIFIER: $ => /[a-zA-Z\$_][a-zA-Z0-9\$_]*/,
     NUMBER: $ => /\d+/,
+    STRING: $ => /"[^\n"]*"|'[^\n']*'/,
   },
 
   extras: $ => [
