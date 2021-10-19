@@ -275,12 +275,20 @@
           }
         },
         {
-          "type": "FIELD",
-          "name": "params",
-          "content": {
-            "type": "SYMBOL",
-            "name": "parameterList"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "params",
+              "content": {
+                "type": "SYMBOL",
+                "name": "parameterList"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "REPEAT",

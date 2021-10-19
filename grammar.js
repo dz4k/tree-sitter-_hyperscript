@@ -66,7 +66,7 @@ module.exports = grammar({
     behaviorFeature: $ => seq(
       'behavior',
       field('name', $._dotOrColonPath),
-      field('params', $.parameterList),
+      optional(field('params', $.parameterList)),
       repeat(seq(
         $._feature,
         'end',
